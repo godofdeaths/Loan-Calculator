@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 500px; margin: auto; }
+        input { margin: 10px 0; width: 80%; padding: 10px; }
+        button { padding: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Loan Calculator</h1>
+    <input type="number" id="amount" placeholder="Loan Amount" required>
+    <input type="number" id="interest" placeholder="Annual Interest Rate (%)" required>
+    <input type="number" id="years" placeholder="Years to Repay" required>
+    <button onclick="calculateLoan()">Calculate</button>
+    <h2 id="result"></h2>
+</div>
+
+<script>
+    function calculateLoan() {
+        const amount = document.getElementById('amount').value;
+        const interest = document.getElementById('interest').value / 100 / 12;
+        const years = document.getElementById('years').value * 12;
+
+        const monthlyPayment = (amount * interest) / (1 - Math.pow(1 + interest, -years));
+        const totalPayment = monthlyPayment * years;
+        const totalInterest = totalPayment - amount;
+
+        document.getElementById('result').innerHTML = `
+            Monthly Payment: Rs.${monthlyPayment.toFixed(2)} <br>
+            Total Payment: Rs.${totalPayment.toFixed(2)} <br>
+            Total Interest: Rs.${totalInterest.toFixed(2)}
+        `;
+    }
+</script>
+
+</body>
+</html>
